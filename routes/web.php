@@ -11,6 +11,14 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/', function () {
+    return view('index');
+});
+
+$router->group(['prefix' => 'api', 'namespace' => 'API'], function () use ($router) {
+    $router->get('/films', 'FilmController@index');
+    $router->post('/films', 'FilmController@create');
+    $router->get('/films/{id}', 'FilmController@read');
+    $router->put('/films/{id}', 'FilmController@update');
+    $router->delete('/films/{id}', 'FilmController@delete');
 });

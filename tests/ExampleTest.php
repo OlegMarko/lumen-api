@@ -12,10 +12,17 @@ class ExampleTest extends TestCase
      */
     public function testExample()
     {
-        $this->get('/');
+        $faker = Faker\Factory::create();
 
-        $this->assertEquals(
-            $this->app->version(), $this->response->getContent()
-        );
+        foreach (range(1, 10) as $key) {
+            $data = [
+                'name' => $faker->name,
+                'description' => $faker->text
+            ];
+
+            $this->post('/api/films', $data)->seeJsonEquals([
+                'created' => true
+            ]);
+        }
     }
 }
